@@ -1,20 +1,31 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+/* Background color for the body */
 body {
-  font-family: "helvetica", sans-serif;
-  text-align: center;
+  background-color: #f8f9fa;
+}
+
+/* Style for images inside the cards */
+.card-img-top {
+  width: 100%; /* Ensures image stretches horizontally to fit the container */
+  height: 200px; /* Fixed height for image container */
+  object-fit: contain; /* Ensures the image maintains aspect ratio and fits within the container */
+  display: block; /* Removes space below the image */
+  margin: 0 auto; /* Centers the image inside the container */
+}
+
+/* Alert styling */
+.alert {
+  margin-top: 20px;
+}
+
+/* Navbar margin */
+.navbar {
+  margin-bottom: 30px;
+}
+
+/* Styling for image container (ensures proper fitting) */
+.img-container {
+  width: 100%; /* Ensures the container stretches to fit the card */
+  height: 200px; /* Fixed height for the container */
+  overflow: hidden; /* Hides overflowed part of the image */
+  position: relative; /* Keeps images inside the container without disturbing layout */
 }

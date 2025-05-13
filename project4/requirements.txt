@@ -1,1 +1,8 @@
-Flask==3.0.0
+flask
+flask-login
+PyMySQL
+werkzeug
+sqlalchemy
+google-cloud-storage
+cloud-sql-python-connector
+python-dotenv
