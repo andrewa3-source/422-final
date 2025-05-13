@@ -1,31 +1,39 @@
-import os
 import uuid
 import sqlalchemy
 import config
 from sqlalchemy import Column, String, Text, ForeignKey
-from sqlalchemy.orm import relationship, sessionmaker, scoped_session
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session, declarative_base
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import BadRequest
 from flask_login import UserMixin
-from sqlalchemy.ext.declarative import declarative_base
 from google.cloud import storage
+from google.cloud.sql.connector import Connector, IPTypes
 
-# Prefer TCP host if provided
-if os.environ.get("DB_HOST"):
-    host = os.environ["DB_HOST"]
-    engine_url = "mysql+pymysql://{}:{}@{}/{}".format(
-        config.DB_USER, config.DB_PASSWORD, host, config.DB_NAME
-    )
-else:
-    # Fallback to Unix socket (for App Engine)
-    unix_socket = f"/cloudsql/{config.DB_INSTANCE_CONNECTION_NAME}"
-    engine_url = "mysql+pymysql://{}:{}@/{}?unix_socket={}".format(
-        config.DB_USER, config.DB_PASSWORD, config.DB_NAME, unix_socket
-    )
 
-# Initialize Google Cloud SQL
-engine = sqlalchemy.create_engine(engine_url, pool_size=3)
+# initialize connector
+connector = Connector()
+
+# getconn now set to private IP
+def getconn():
+    conn = connector.connect(
+      config.DB_INSTANCE_CONNECTION_NAME,
+      "pymysql",
+      user=config.DB_USER,
+      password=config.DB_PASSWORD,
+      db=config.DB_NAME,
+      ip_type=IPTypes.PRIVATE
+    )
+    return conn
+
+# create connection pool with 'creator' argument to our connection object function
+engine = sqlalchemy.create_engine(
+    "mysql+pymysql://",
+    creator=getconn,
+    pool_size=3,
+)
+
+
 Session = scoped_session(sessionmaker(bind=engine))
 Base = declarative_base()
 
@@ -52,6 +60,8 @@ class Photo(Base):
 
     # Add relationship to User
     user = relationship("User", backref="photos")
+    
+Base.metadata.create_all(engine)
 
 
 # endregion
