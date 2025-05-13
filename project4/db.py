@@ -11,21 +11,17 @@ from flask_login import UserMixin
 from sqlalchemy.ext.declarative import declarative_base
 from google.cloud import storage
 
-# When deployed to App Engine, the `GAE_ENV` environment variable will be
-if os.environ.get("GAE_ENV") == "standard":
-    # If deployed, use the local socket interface for accessing Cloud SQL
+# Prefer TCP host if provided
+if os.environ.get("DB_HOST"):
+    host = os.environ["DB_HOST"]
+    engine_url = "mysql+pymysql://{}:{}@{}/{}".format(
+        config.DB_USER, config.DB_PASSWORD, host, config.DB_NAME
+    )
+else:
+    # Fallback to Unix socket (for App Engine)
     unix_socket = f"/cloudsql/{config.DB_INSTANCE_CONNECTION_NAME}"
     engine_url = "mysql+pymysql://{}:{}@/{}?unix_socket={}".format(
         config.DB_USER, config.DB_PASSWORD, config.DB_NAME, unix_socket
-    )
-else:
-    # If running locally, use the TCP connections instead
-    # Set up Cloud SQL Proxy (cloud.google.com/sql/docs/mysql/sql-proxy)
-    # so that your application can use 127.0.0.1:3306 to connect to your
-    # Cloud SQL instance
-    host = "127.0.0.1"
-    engine_url = "mysql+pymysql://{}:{}@{}/{}".format(
-        config.DB_USER, config.DB_PASSWORD, host, config.DB_NAME
     )
 
 # Initialize Google Cloud SQL

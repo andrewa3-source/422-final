@@ -11,6 +11,8 @@ import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.config["SESSION_TYPE"] = 'filesystem'
+app.secret_key = 'super secret key'
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
