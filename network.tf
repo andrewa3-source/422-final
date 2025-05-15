@@ -64,5 +64,5 @@ resource "google_compute_firewall" "allow_port_5000" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["flask-vm"]
+  target_tags   = ["final-422"]
 }

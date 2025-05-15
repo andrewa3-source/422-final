@@ -5,6 +5,8 @@ resource "google_sql_database_instance" "default" {
 
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
+  deletion_protection = false
+
   settings {
     tier = "db-f1-micro"
     ip_configuration {

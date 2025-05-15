@@ -1,5 +1,5 @@
 output "vm_ip" {
-  value = google_compute_instance.flask-vm.network_interface[0].access_config[0].nat_ip
+  value = google_compute_instance.final-422.network_interface[0].access_config[0].nat_ip
 }
 
 output "db_connection_name" {

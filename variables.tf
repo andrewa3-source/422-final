@@ -44,4 +44,4 @@ variable "db_name" {
   description = "Name of the database to use"
   type = string
   default = "gallery"
-}
+} 

@@ -1,5 +1,5 @@
-resource "google_compute_instance" "flask-vm" {
-  name         = "flask-vm"
+resource "google_compute_instance" "final-422" {
+  name         = "final-422"
   machine_type = "e2-standard-2"
   zone         = var.zone
   tags         = ["ssh", "http-server"]
