@@ -4,7 +4,7 @@ This is a simple gallery web application that is using the following technologie
 - GCP hosting
 - Terraform
 
-Demo Video: (https://youtu.be/GnCnnmCHBEw)
+Demo Video: (https://youtu.be/Oz6Onp7DIB0)
 
 This application utilizes terraform for the GCP initilization and tear down. A Cloud SQL database instance is used to store user and photo information. A bucket is used to store the pictures for the web application allowing them to be retrieved, downloaded, or deleted.
 
